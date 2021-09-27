@@ -4,7 +4,7 @@ import json
 def stripp(s):
     return s.replace("§a","").replace("§f","").replace("§9","").replace("§5","").replace("§c","").replace("§6","").replace("§3","").replace("§7","")
 
-path="C:\\Users\\ASUS\\Desktop\\python\\skb_recipe\\items\\"
+path="./items/"
 recipes={}
 files = []
 poss=["A1","A2","A3","B1","B2","B3","C1","C2","C3"]
@@ -39,3 +39,6 @@ for file in files:
 
 print(recipes)
 print("Totally "+str(len(recipes)))
+f=open("recipes.json","w",encoding="utf-8")
+json.dump(recipes,f)
+print("Finish")
