@@ -7,8 +7,9 @@ def stripp(s):
 path="C:\\Users\\ASUS\\Desktop\\python\\skb_recipe\\items\\"
 recipes={}
 files = []
-poss=["A1","A2","A3","B1","B2","B3","C1","C2","C3"]
-rarity=["COMMON","UNCOMMON","RARE","EPIC","LEGENDARY"]
+poss=("A1","A2","A3","B1","B2","B3","C1","C2","C3")
+rarity=("COMMON","UNCOMMON","RARE","EPIC","LEGENDARY")
+hoes=("Turing Sugar Cane Hoe","Newton Nether Warts Hoe","Euclid\u0027s Wheat Hoe","Pythagorean Potato Hoe","Gauss Carrot Hoe")
 
 for (dirpath, dirnames, filenames) in walk(path):
     files.extend(filenames)
@@ -24,10 +25,13 @@ for file in files:
     data=json.load(open(path+file,"r",encoding="UTF-8"))
     if ("recipe" in data) and ("vanilla" not in data):
         name=stripp(data["displayname"].replace(r"{LVL}","N"))
+        #add rarity
         if("[Lvl"in name):
             name+=" "+rarity[int(file[-6])]
         elif(name=="Beastmaster Crest"):
             name+=" "+file.split("_")[-1][:-5]
+        elif name in hoes:
+            name+=" "+rarity[int(file[-6])-1]
         ingre={}
         for pos in poss:
             if data["recipe"][pos]=="":
