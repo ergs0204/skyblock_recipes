@@ -26,6 +26,8 @@ for file in files:
         name=stripp(data["displayname"].replace(r"{LVL}","N"))
         if("[Lvl"in name):
             name+=" "+rarity[int(file[-6])]
+        elif(name=="Beastmaster Crest"):
+            name+=" "+file.split("_")[-1][:-5]
         ingre={}
         for pos in poss:
             if data["recipe"][pos]=="":
