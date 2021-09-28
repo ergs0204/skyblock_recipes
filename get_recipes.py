@@ -8,7 +8,7 @@ path="C:\\Users\\ASUS\\Desktop\\python\\skb_recipe\\items\\"
 recipes={}
 files = []
 poss=["A1","A2","A3","B1","B2","B3","C1","C2","C3"]
-
+rarity=["COMMON","UNCOMMON","RARE","EPIC","LEGENDARY"]
 
 for (dirpath, dirnames, filenames) in walk(path):
     files.extend(filenames)
@@ -17,13 +17,15 @@ files=tuple(files)
 #print(files)
 
 for file in files:
+    '''
     if ("GENERATOR" in file) or ("SACK" in file and "INK" not in file):
-        print(file[:-4])
-        continue
+        #print(file[:-4])
+        continue'''
     data=json.load(open(path+file,"r",encoding="UTF-8"))
     if ("recipe" in data) and ("vanilla" not in data):
-        name=stripp(data["displayname"])
-        #print(name)
+        name=stripp(data["displayname"].replace(r"{LVL}","N"))
+        if("[Lvl"in name):
+            name+=" "+rarity[int(file[-6])]
         ingre={}
         for pos in poss:
             if data["recipe"][pos]=="":
@@ -39,3 +41,6 @@ for file in files:
 
 print(recipes)
 print("Totally "+str(len(recipes)))
+
+f=open("recipes.json","w",encoding="utf-8")
+json.dump(recipes,f)
